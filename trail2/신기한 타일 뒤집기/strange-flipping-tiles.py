@@ -1,28 +1,37 @@
+MAX_K = 100000
+
+# 변수 선언 및 입력:
 n = int(input())
-commands = [tuple(input().split()) for _ in range(n)]
-x = []
-dir = []
-for num, direction in commands:
-    x.append(int(num))
-    dir.append(direction)
+a = [0] * (2 * MAX_K + 1)
+b, w = 0, 0
 
-# Please write your code here.
-arr = ['']*200001
-curr = 100000
+cur = MAX_K
+for _ in range(n):
+    x, c = tuple(input().split())
+    x = int(x)
 
-for i in range(n):
-    step = x[i]
-    if dir[i]=='L':
-        while step > 0:
-            arr[curr]='W'
-            step-=1
-            if step:
-                curr-=1
-    if dir[i]=='R':
-        while step > 0:
-            arr[curr]='B'
-            step-=1
-            if step:
-                curr+=1
+    if c == 'L':
+        # x칸 왼쪽으로 칠합니다.
+        while x > 0:
+            a[cur] = 1
+            x -= 1
 
-print(arr.count('W'), arr.count('B'))
+            if x: 
+                cur -= 1
+    else:
+        # x칸 오른쪽으로 칠합니다.
+        while x > 0:
+            a[cur] = 2
+            x -= 1
+
+            if x: 
+                cur += 1
+
+for i in range(2 * MAX_K + 1):
+    if a[i] == 1: 
+        w += 1
+    if a[i] == 2: 
+        b += 1
+
+# 정답을 출력합니다.
+print(w, b)
